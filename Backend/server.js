@@ -20,17 +20,16 @@ app.use("/api/complaints", complaintRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/block-requests", blockRequestRoutes);
 
-// ✅ Direct MongoDB connection (NO .env)
-mongoose.connect("mongodb+srv://vasan:anitha07@cluster0.7nglaqy.mongodb.net/Compilance_system")
+// MongoDB connection (Mongoose 7+)
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
+
+mongoose.connect(MONGO_URI)
   .then(() => console.log("MongoDB Connected ✅"))
   .catch((err) => console.log("MongoDB Error ❌", err));
 
-// Test route (optional)
-app.get("/", (req, res) => {
-  res.send("Backend is running ✅");
-});
+// Test route
+app.get("/", (req, res) => res.send("Backend is running ✅"));
 
 // Start server
-app.listen(5000, () => {
-  console.log("Server running on port 5000 🚀");
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT} 🚀`));
